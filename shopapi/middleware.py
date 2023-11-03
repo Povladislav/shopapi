@@ -9,7 +9,7 @@ load_dotenv()
 class ApiKeyMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
-        self.exclude_path = ("/admin/",)
+        self.exclude_path = ("/admin/", "/swagger/")
 
     def __call__(self, request):
         api_key = request.headers.get("Key")

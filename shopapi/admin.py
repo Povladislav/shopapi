@@ -1,6 +1,4 @@
-import json
 
-from django.conf import settings
 from django.contrib import admin
 
 from shopapi.models import *
@@ -23,8 +21,6 @@ class DistributorAdmin(admin.ModelAdmin):
     list_display_links = ("name_of_manufacture", "provider")
     list_filter = ("city",)
     actions = [clear_debt]
-    js = (settings.STATIC_URL + 'admin/js/copy_email.js',)
-
 
 
 @admin.register(Factory)

@@ -27,7 +27,7 @@ class DistributorViewSet(ModelViewSet):
         )
 
     def list(self, request):
-        print(settings.STATIC_URL + 'admin/js/copy_email.js')
+        print(settings.STATIC_URL + "admin/js/copy_email.js")
         country = request.GET.get("country", None)
         product_id = request.GET.get("product_id", None)
 
