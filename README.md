@@ -9,3 +9,5 @@ docker-compose up --build
 python3 manage.py migrate
 
 Так же в приложении присутствует swagger для документации API и доступен по эндпоинту /swagger/
+
+#Чтобы получить доступ к API при каждом запросе нужно в headers с ключем Key вставить значение API_KEY(находится в env файле)
