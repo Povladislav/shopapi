@@ -1,0 +1,50 @@
+version: "3.10"
+services:
+  app:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    env_file:
+      - .env-non-dev
+    depends_on:
+      - db
+  db:
+    image: postgres
+    container_name: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    env_file:
+      - .env-non-dev
+  redis:
+    image: redis
+    restart: always
+  worker:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - .:/code
+    env_file:
+      - .env-non-dev
+    command: [ 'celery','-A','shop','worker' ]
+  celery-beats:
+    restart: always
+    build:
+      context: .
+    volumes:
+      - ./:/code/
+    command: [ 'celery', '-A' ,'shop' ,'beat', '-l' ,'INFO', '--scheduler','django_celery_beat.schedulers:DatabaseScheduler' ]
+    env_file:
+      - .env-non-dev
+volumes:
+  pg_data:
+    driver: local
